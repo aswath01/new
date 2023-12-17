@@ -1,0 +1,316 @@
+{
+	"info": {
+		"_postman_id": "4e6f89bf-6dca-4825-a088-9da950144b28",
+		"name": "a virtual classroom",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16707495"
+	},
+	"item": [
+		{
+			"name": "login",
+			"item": [
+				{
+					"name": "login as tutor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"pm.environment.set(\"user-token\", response.data);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userName\" : \"physics\",\n    \"password\" :\"Abcd@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/userService/login?role=tutor",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"userService",
+								"login"
+							],
+							"query": [
+								{
+									"key": "role",
+									"value": "tutor"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login as student",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"pm.environment.set(\"user-token\", response.data);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userName\" : \"p\",\n    \"password\" :\"Abcd@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/userService/login?role=student",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"userService",
+								"login"
+							],
+							"query": [
+								{
+									"key": "role",
+									"value": "student"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "assignments",
+			"item": [
+				{
+					"name": "create assignment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "user-token",
+								"value": "{{user-token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"assignedStudents\" : [\"ad37d9fc-a224-45b9-9c96-04023c449555\",\"08721ed3-d226-4e60-b1fe-d66086f03a16\"],\n    \"description\" : \"In this assignments you would need to implement numpy in python\",\n    \"publishedAt\" : \"2023-12-17\", //yyyy-mm-dd format\n    \"deadline\" :\"2023-12-19T20:02:31.760Z\",\n    \"assignmentStatus\" :\"ONGOING\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/assignmentService/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"assignmentService",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update assignment",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "user-token",
+								"value": "{{user-token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"assignedStudents\" : [\"ad37d9fc-a224-45b9-9c96-04023c449555\",\"08721ed3-d226-4e60-b1fe-d66086f03a16\"],\n    \"description\" : \"you have to complete fundatmentals\",\n    \"publishedAt\" : \"2023-12-15\",\n    \"deadline\" :\"2023-12-21\",\n    \"assignmentStatus\" :\"ONGOING\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/assignmentService/update/1fd4384b-1711-4658-be47-44eb87e11bfc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"assignmentService",
+								"update",
+								"1fd4384b-1711-4658-be47-44eb87e11bfc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete assignment",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "user-token",
+								"value": "{{user-token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/assignmentService/delete/1fd4384b-1711-4658-be47-44eb87e11bfc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"assignmentService",
+								"delete",
+								"1fd4384b-1711-4658-be47-44eb87e11bfc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "assignment feed",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "user-token",
+								"value": "{{user-token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/assignmentService/get?publishedAt=2023-12-16&assignmentStatus=ongoing&status=pending",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"assignmentService",
+								"get"
+							],
+							"query": [
+								{
+									"key": "publishedAt",
+									"value": "2023-12-16"
+								},
+								{
+									"key": "assignmentStatus",
+									"value": "ongoing"
+								},
+								{
+									"key": "status",
+									"value": "pending"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "submissions",
+			"item": [
+				{
+					"name": "submit assignment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "user-token",
+								"value": "{{user-token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/macsho/Downloads/invoice_09345409132023 (1).pdf"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/assignmentService/submitAssignment/db288629-929b-48ed-833f-83202fcee6a4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"assignmentService",
+								"submitAssignment",
+								"db288629-929b-48ed-833f-83202fcee6a4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSubmissions by assignmentId",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

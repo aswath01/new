@@ -1,0 +1,36 @@
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE TABLE IF NOT EXISTS public.users (
+    id uuid DEFAULT uuid_generate_v4(),
+    userName varchar(40) NOT NULL,
+    is_active boolean DEFAULT true,
+    role varchar(40) CHECK (role IN ('student', 'tutor')) NOT NULL,
+    date_created date NOT NULL,
+    CONSTRAINT user_pk PRIMARY KEY (id)
+);
+
+  CREATE TABLE IF NOT EXISTS public.assignments (
+    id uuid DEFAULT uuid_generate_v4(),
+    createdBy uuid REFERENCES public.users(id),
+    description varchar(150) not null,
+    is_active boolean DEFAULT true,
+    assignedTo uuid[] not null,
+    publishedAt date NOT NULL,
+    deadline date NOT NULL,
+    assignmentStatus varchar(40) CHECK (assignmentStatus IN ('ONGOING', 'SCHEDULED')) NOT NULL,
+    CONSTRAINT assignment_pk PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.submission (
+    id uuid DEFAULT uuid_generate_v4(),
+    assignmentId uuid REFERENCES public.assignments(id),
+    studentId uuid REFERENCES public.users(id),
+    is_active boolean DEFAULT true,
+    deadline date NOT NULL,
+    submitted_date date,
+    submissionstatus varchar(40),
+    document_content bytea, -- or bytea[] if you want to store multiple documents
+    document_name varchar(255), -- adjust the size based on your needs
+    document_type varchar(10),
+    CONSTRAINT submission_pk PRIMARY KEY (id)
+);
