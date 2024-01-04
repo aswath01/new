@@ -1,6 +1,6 @@
 FROM node:18
 
-WORKDIR /usr/src/virtual-classroom
+WORKDIR /usr/src/virtual-classroom/api_gateway
 
 COPY package*.json ./
 
